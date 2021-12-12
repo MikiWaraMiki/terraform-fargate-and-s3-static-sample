@@ -156,3 +156,10 @@ resource "aws_route_table_association" "private_rds" {
   subnet_id = each.value
   route_table_id = module.private_route_table.id
 }
+
+/**
+  Network ACL
+**/
+module "public_nacl" {
+  source = "../../elements/network_acl"
+}
