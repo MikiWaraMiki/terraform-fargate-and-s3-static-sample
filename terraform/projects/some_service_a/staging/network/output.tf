@@ -71,3 +71,12 @@ output "private_route_table_id" {
   description = "The id of private subnet route table"
   value = module.network.private_route_table_id
 }
+
+output "public_network_acl_id" {
+  description = "The id of public network acl"
+  value = module.network.public_network_acl_id
+}
+output "public_network_acl_arn" {
+  description = "The arn of public network acl"
+  value = module.network.public_network_acl_arn
+}

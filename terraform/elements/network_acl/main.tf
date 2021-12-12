@@ -3,7 +3,7 @@ resource "aws_network_acl" "this" {
   subnet_ids = var.subnet_ids
 
   tags = merge(
-    vat.tags,
+    var.tags,
     {
       Name = var.name
     }

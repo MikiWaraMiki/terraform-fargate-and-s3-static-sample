@@ -40,6 +40,17 @@ variable "management_subnet_attributes" {
   description = "The attributes of management Subnet"
 }
 
+variable "ingress_public_nacl_rules" {
+  type = map(map(string))
+  description = "The nacl rule of ingress"
+  default = {}
+}
+variable "egress_public_nacl_rules" {
+  type = map(map(string))
+  description = "The nacl rule of ingress"
+  default = {}
+}
+
 variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)

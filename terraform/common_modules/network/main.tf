@@ -160,6 +160,52 @@ resource "aws_route_table_association" "private_rds" {
 /**
   Network ACL
 **/
+locals {
+  default_ingress_rule = {
+    100: {
+      rule_number = 100
+      rule_action = "allow"
+      cidr_block = "0.0.0.0/0"
+      from_port = 0
+      to_port = 0
+      protocol = "all"
+    }
+  }
+  default_egress_rule = {
+    100: {
+      rule_number = 100
+      rule_action = "allow"
+      cidr_block = "0.0.0.0/0"
+      from_port = 0
+      to_port = 0
+      protocol = "all"
+    }
+  }
+
+  public_ingress_rule = var.ingress_public_nacl_rules == {} ? local.default_ingress_rule : merge(
+    var.ingress_public_nacl_rules,
+    local.default_ingress_rule
+  )
+  public_egress_rule = var.egress_public_nacl_rules == {} ? local.default_egress_rule : merge(
+    var.egress_public_nacl_rules,
+    local.default_egress_rule
+  )
+}
 module "public_nacl" {
   source = "../../elements/network_acl"
+
+  name = "${var.environment}-${var.service_name}-public"
+  vpc_id = module.vpc.vpc_id
+  subnet_ids = toset(
+    concat(
+      [for subnet in module.elb_public_subnets : subnet.id],
+      [for subnet in module.web_public_subnets : subnet.id],
+      [for subnet in module.management_public_subnets : subnet.id]
+    )
+  )
+
+  ingress_rule = local.public_ingress_rule
+  egress_rule = local.public_egress_rule
+
+  tags = var.tags
 }

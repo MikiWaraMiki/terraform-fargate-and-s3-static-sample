@@ -12,7 +12,7 @@ variable "subnet_ids" {
   default = []
 }
 
-variable "ingnress_rule" {
+variable "ingress_rule" {
   description = "The rule map of inbound"
   type = map(map(string))
   default = {}
@@ -20,11 +20,11 @@ variable "ingnress_rule" {
 variable "egress_rule" {
   description = "The rule map of outbound"
   type = map(map(string))
-  default = []
+  default = {}
 }
 
 variable "tags" {
   description = "The tags of resource"
   type = map(string)
-  default = []
+  default = {}
 }
