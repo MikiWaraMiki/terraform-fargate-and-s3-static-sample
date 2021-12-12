@@ -16,3 +16,13 @@ module "cluster_parameter_group" {
 
   tags = var.tags
 }
+
+module "db_parameter_group" {
+  source = "../../elements/rds_db_parameter_group"
+  name = var.db_parameter_group_name
+  description = var.db_parameter_group_description
+  family = var.family
+  parameter_list = var.db_parameter_list
+
+  tags = var.tags
+}

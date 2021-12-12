@@ -15,3 +15,12 @@ output "cluster_parameter_group_arn" {
   description = "The arn of cluster parameter group"
   value = module.aurora_postgres.cluster_parameter_group_arn
 }
+
+output "db_parameter_group_id" {
+  description = "The id of cluster parameter group"
+  value = module.aurora_postgres.db_parameter_group_id
+}
+output "db_parameter_group_arn" {
+  description = "The arn of cluster parameter group"
+  value = module.aurora_postgres.db_parameter_group_arn
+}

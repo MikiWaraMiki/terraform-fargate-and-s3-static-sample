@@ -25,6 +25,22 @@ variable "cluster_parameter_list" {
   default = []
 }
 
+
+variable "db_parameter_group_name" {
+  description = "The name of cluster parameter group"
+  type = string
+}
+variable "db_parameter_group_description" {
+  description = "The description of cluster parameter group"
+  type = string
+}
+variable "db_parameter_list" {
+  description = "The list of cluster parameter"
+  type = list(map(string))
+  default = []
+}
+
+
 variable "family" {
   description = "The family of aurora engine"
   type = string

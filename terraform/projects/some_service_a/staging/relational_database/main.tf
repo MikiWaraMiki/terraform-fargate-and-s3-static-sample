@@ -17,10 +17,11 @@ module "aurora_postgres" {
   subnet_group_description = "For ${var.environment}."
   rds_subnet_ids = data.terraform_remote_state.network.outputs.rds_subnet_ids
 
+  family = "aurora-postgresql13"
+
   // cluster parameter group
   cluster_parameter_group_name = "${var.environment}-postgres-cluster-parameter-group"
   cluster_parameter_group_description = "For ${var.environment}. Postgres13"
-  family = "aurora-postgresql13"
   cluster_parameter_list = [
     {
       name         = "shared_preload_libraries"
@@ -68,6 +69,11 @@ module "aurora_postgres" {
       apply_method = "immediate"
     }
   ]
+
+  // db parameter group
+  db_parameter_group_name = "${var.environment}-postgres-cluster-parameter-group"
+  db_parameter_group_description = "For ${var.environment}."
+  db_parameter_list = []
 
   tags = {
     Environment = var.environment
