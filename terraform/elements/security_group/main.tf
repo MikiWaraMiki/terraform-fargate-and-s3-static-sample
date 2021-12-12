@@ -14,7 +14,7 @@ resource "aws_security_group_rule" "ingress" {
   for_each = var.ingress_rules
 
   type = "ingress"
-  security_group_id = var.is_create_security_group ? aws_security_group.this.id : var.security_group_id
+  security_group_id = var.is_create_security_group ? aws_security_group.this[0].id : var.security_group_id
 
   description = lookup(each.value, "description", "")
   from_port = lookup(each.value, "from_port", 0)
@@ -28,7 +28,7 @@ resource "aws_security_group_rule" "egress" {
   for_each = var.egress_rules
 
   type = "egress"
-  security_group_id = var.is_create_security_group ? aws_security_group.this.id : var.security_group_id
+  security_group_id = var.is_create_security_group ? aws_security_group.this[0].id : var.security_group_id
 
   description = lookup(each.value, "description", "")
   from_port = lookup(each.value, "from_port", 0)

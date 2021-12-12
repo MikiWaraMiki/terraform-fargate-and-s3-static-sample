@@ -13,6 +13,11 @@ variable "description" {
   type = string
   default = ""
 }
+variable "vpc_id" {
+  description = "The id of vpc"
+  type = string
+  default = ""
+}
 variable "tags" {
   description = "The tags of security group"
   type = map(string)
@@ -26,11 +31,11 @@ variable "security_group_id" {
 
 variable "ingress_rules" {
   description = "The ingress rule of security group."
-  type = map(map(string))
-  default = {}
+  type = list(map(any))
+  default = []
 }
 variable "egress_rules" {
   description = "The egress rule of security group."
-  type = map(map(string))
-  default = {}
+  type = list(map(any))
+  default = []
 }
