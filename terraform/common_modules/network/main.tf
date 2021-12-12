@@ -127,28 +127,32 @@ module "private_route_table" {
 }
 
 resource "aws_route_table_association" "public_elb_table" {
-  subnet_id = [
+  for_each = toset([
     for subnet in module.elb_public_subnets : subnet.id
-  ]
+  ])
+
+  subnet_id = each.value
   route_table_id = module.public_elb_route_table.id
 }
 
 resource "aws_route_table_association" "public_web_table" {
-  subnet_id = [
-    for subnet in module.web_public_subnets : subnet.id
-  ]
+  for_each = toset(
+    concat(
+      [for subnet in module.web_public_subnets : subnet.id],
+      [for subnet in module.management_public_subnets : subnet.id]
+    )
+  )
+  subnet_id = each.value
   route_table_id = module.public_web_route_table.id
 }
 
-
-resource "aws_route_table_association" "private_table" {
-  subnet_id = concat(
-    [
-      for subnet in module.rds_private_subnets : subnet.id
-    ],
-    [
-      for subnet in module.elasticache_private_subnets: subnet.id
-    ]
+resource "aws_route_table_association" "private_rds" {
+  for_each = toset(
+    concat(
+      [for subnet in module.rds_private_subnets : subnet.id],
+      [for subnet in module.elasticache_private_subnets : subnet.id]
+    )
   )
+  subnet_id = each.value
   route_table_id = module.private_route_table.id
 }
