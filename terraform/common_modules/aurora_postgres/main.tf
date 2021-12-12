@@ -8,5 +8,11 @@ module "subnet_group" {
 }
 
 module "cluster_parameter_group" {
+  source = "../../elements/rds_cluster_parameter_group"
+  name = var.cluster_parameter_group_name
+  description = var.cluster_parameter_group_description
+  family = var.family
+  parameter_list = var.cluster_parameter_list
 
+  tags = var.tags
 }
