@@ -2,3 +2,4 @@ bucket: your bucketname
 region: ap-northeast-1
 encrypt: true
 prefix: your bucket prefix
+acm_domain: your acm domain
