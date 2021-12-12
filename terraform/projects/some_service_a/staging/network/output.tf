@@ -80,3 +80,12 @@ output "public_network_acl_arn" {
   description = "The arn of public network acl"
   value = module.network.public_network_acl_arn
 }
+
+output "private_network_acl_id" {
+  description = "The id of private network acl"
+  value = module.network.private_network_acl_id
+}
+output "private_network_acl_arn" {
+  description = "The arn of private network acl"
+  value = module.network.private_network_acl_arn
+}

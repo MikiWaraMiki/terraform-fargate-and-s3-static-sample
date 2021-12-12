@@ -190,6 +190,15 @@ locals {
     var.egress_public_nacl_rules,
     local.default_egress_rule
   )
+  private_ingress_rule = var.ingress_private_nacl_rules == {} ? local.default_ingress_rule : merge(
+    var.ingress_private_nacl_rules,
+    local.default_ingress_rule
+  )
+  private_egress_rule = var.egress_private_nacl_rules == {} ? local.default_egress_rule : merge(
+    var.egress_private_nacl_rules,
+    local.default_egress_rule
+  )
+
 }
 module "public_nacl" {
   source = "../../elements/network_acl"
@@ -206,6 +215,24 @@ module "public_nacl" {
 
   ingress_rule = local.public_ingress_rule
   egress_rule = local.public_egress_rule
+
+  tags = var.tags
+}
+
+module "private_nacl" {
+  source = "../../elements/network_acl"
+
+  name = "${var.environment}-${var.service_name}-private"
+  vpc_id = module.vpc.vpc_id
+  subnet_ids = toset(
+    concat(
+      [for subnet in module.rds_private_subnets : subnet.id],
+      [for subnet in module.elasticache_private_subnets : subnet.id]
+    )
+  )
+
+  ingress_rule = local.private_ingress_rule
+  egress_rule = local.private_egress_rule
 
   tags = var.tags
 }
