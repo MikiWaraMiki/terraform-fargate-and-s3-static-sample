@@ -45,8 +45,8 @@ module "replication_group" {
   maintenance_window = var.redis_maintenance_window
 
   cluster_size = var.cluster_size
-  cluster_mode_enabled = true
-  multi_az_enabled = true
+  cluster_mode_enabled = var.cluster_size > 1
+  multi_az_enabled = var.cluster_size > 1
 
 
   port = 6379
@@ -55,7 +55,7 @@ module "replication_group" {
 
   at_rest_encryption_enabled = false
   transit_encryption_enabled = false
-  automatic_failover_enabled = true
+  automatic_failover_enabled = var.cluster_size > 1
   availability_zones = var.availability_zones
 
 

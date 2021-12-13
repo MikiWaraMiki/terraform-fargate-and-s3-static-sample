@@ -27,7 +27,7 @@ module "elasticache_redis" {
   // replication group
   replication_group_id = "${var.environment}-${var.service_name}-redis"
   redis_maintenance_window = "mon:20:00-mon:21:00"
-  cluster_size = 2
+  cluster_size = 1
   instance_type = "cache.t4g.small"
   engine_version = "6.x"
   security_group_ids = [
