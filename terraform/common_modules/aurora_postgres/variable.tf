@@ -85,6 +85,18 @@ variable "enabled_cloudwatch_logs_exports" {
   default = ["postgresql"]
 }
 
+// cluster instance
+variable "is_enabled_enhanced_monitoring_role" {
+  type = bool
+  default = true
+}
+
+variable "aurora_instance_attributes" {
+  description = "The attributes of cluster instance"
+  type = map(any)
+  default = {}
+}
+
 variable "tags" {
   type = map(string)
   default = {}

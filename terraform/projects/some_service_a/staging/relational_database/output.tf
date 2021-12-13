@@ -54,3 +54,12 @@ output "cluster_engine_version_actual" {
   description = "The running version of the cluster database"
   value       = module.aurora_postgres.cluster_engine_version_actual
 }
+
+output "cluster_instance_ids" {
+  description = "The ids of aurora cluster instance"
+  value = module.aurora_postgres.cluster_instance_ids
+}
+output "cluster_instance_arns" {
+  description = "The arns of aurora cluster instance"
+  value = module.aurora_postgres.cluster_instance_arns
+}

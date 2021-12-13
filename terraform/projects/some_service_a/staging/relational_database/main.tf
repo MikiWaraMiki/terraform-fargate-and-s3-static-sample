@@ -81,6 +81,17 @@ module "aurora_postgres" {
   rds_security_group_ids = [
     data.terraform_remote_state.security_group.outputs.rds_security_group_id
   ]
+
+  // cluster instance
+  is_enabled_enhanced_monitoring_role = true
+  aurora_instance_attributes = {
+    1: {
+      identifier = "${var.environment}-${var.service_name}-1"
+      instance_class = "db.t4g.medium"
+      availability_zone = "ap-northeast-1a"
+      auto_minor_version_upgrade = true
+    }
+  }
   tags = {
     Environment = var.environment
   }

@@ -54,3 +54,16 @@ output "cluster_engine_version_actual" {
   description = "The running version of the cluster database"
   value       = module.aurora_cluster.cluster_engine_version_actual
 }
+
+output "cluster_instance_ids" {
+  description = "The ids of aurora cluster instance"
+  value = [
+    for instance in module.aurora_instance : instance.id
+  ]
+}
+output "cluster_instance_arns" {
+  description = "The arns of aurora cluster instance"
+  value = [
+    for instance in module.aurora_instance : instance.arn
+  ]
+}

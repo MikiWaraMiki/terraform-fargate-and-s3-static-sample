@@ -50,3 +50,32 @@ module "aurora_cluster" {
   enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
   tags = var.tags
 }
+
+module "aurora_enhanced_monitoring_role" {
+  count = var.is_enabled_enhanced_monitoring_role ? 1 : 0
+  source = "../../elements/rds_enhanced_monitoring_role/"
+
+  role_name = "${var.aurora_cluster_name}-monitoring-role"
+  role_description = "For ${var.aurora_cluster_name}. Aurora enhanced monitoring role"
+
+  tags = var.tags
+}
+module "aurora_instance" {
+  source = "../../elements/rds_cluster_instance/"
+
+  for_each = var.aurora_instance_attributes
+
+  identifier = each.value.identifier
+  cluster_identifier = module.aurora_cluster.cluster_id
+  engine = "aurora-postgresql"
+  engine_version = var.engine_version
+  instance_class = each.value.instance_class
+  db_parameter_group_name = module.db_parameter_group.id
+  availability_zone = lookup(each.value, "availability_zone", "")
+  preferred_maintenance_window = lookup(each.value, "preferred_maintenance_window", "thu:19:00-thu:20:00")
+  auto_minor_version_upgrade = lookup(each.value, "auto_minor_version_upgrade", true)
+  monitoring_interval = var.is_enabled_enhanced_monitoring_role ? lookup(each.value, "monitoring_interval", 30) : 0
+  monitoring_role_arn = var.is_enabled_enhanced_monitoring_role ? module.aurora_enhanced_monitoring_role[0].role_arn : ""
+
+  tags = var.tags
+}
