@@ -37,8 +37,10 @@ module "aurora_cluster" {
   master_username = "master_admin"
   // NOTE: tfstateに管理させないため初回のみ適用。作成後はSecrets Managerで管理させる
   is_create_random_password = true
+  final_snapshot_identifier_prefix = "final-${var.aurora_cluster_name}"
   skip_final_snapshot = false
-  deletion_protection = true
+  // TODO: 本番リリース時にはtrueに変更
+  deletion_protection = false
   backup_retention_period = var.backup_retention_period
   preferred_backup_window = var.preferred_backup_window
   preferred_maintenance_window = var.preferred_maintenance_window

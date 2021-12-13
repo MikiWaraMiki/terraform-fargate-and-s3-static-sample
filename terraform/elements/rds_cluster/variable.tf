@@ -106,7 +106,7 @@ variable "final_snapshot_identifier_prefix" {
 variable "skip_final_snapshot" {
   description = "Determines whether a final snapshot is created before the cluster is deleted. If true is specified, no snapshot is created"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "deletion_protection" {
