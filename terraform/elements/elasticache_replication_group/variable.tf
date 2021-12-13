@@ -10,9 +10,25 @@ variable "replication_group_id" {
   default     = ""
 }
 
+variable "description" {
+  type = string
+  description = "The description of replication group"
+  default = ""
+}
+
 variable "subnet_group_name" {
   type        = string
   description = "Subnet group name for the ElastiCache instance"
+}
+
+variable "parameter_group_name" {
+  type = string
+  description = "The name of parameter group"
+}
+
+variable "security_group_ids" {
+  type = list(string)
+  default = []
 }
 
 variable "maintenance_window" {
@@ -35,20 +51,6 @@ variable "port" {
 variable "instance_type" {
   type        = string
   description = "Elastic cache instance type"
-}
-
-variable "family" {
-  type        = string
-  description = "Redis family"
-}
-
-variable "parameter" {
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default     = []
-  description = "A list of Redis parameters to apply. Note that parameters may differ from one Redis family to another"
 }
 
 variable "engine_version" {
@@ -75,24 +77,6 @@ variable "notification_topic_arn" {
   type        = string
   default     = ""
   description = "Notification topic arn"
-}
-
-variable "alarm_cpu_threshold_percent" {
-  type        = number
-  default     = 75
-  description = "CPU threshold alarm level"
-}
-
-variable "alarm_actions" {
-  type        = list(string)
-  description = "Alarm action list"
-  default     = []
-}
-
-variable "ok_actions" {
-  type        = list(string)
-  description = "The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Number (ARN)"
-  default     = []
 }
 
 variable "apply_immediately" {
@@ -173,4 +157,9 @@ variable "cluster_mode_num_node_groups" {
   type        = number
   description = "Number of node groups (shards) for this Redis replication group. Changing this number will trigger an online resizing operation before other settings modifications"
   default     = 0
+}
+
+variable "tags" {
+  type = map(string)
+  default = {}
 }
