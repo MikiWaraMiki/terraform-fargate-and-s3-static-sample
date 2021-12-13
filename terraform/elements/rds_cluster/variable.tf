@@ -145,6 +145,11 @@ variable "vpc_security_group_ids" {
   default     = []
 }
 
+variable "db_subnet_group_name" {
+  description = "The name of rds sunet group"
+  type = string
+}
+
 variable "snapshot_identifier" {
   description = "Specifies whether or not to create this cluster from a snapshot. You can use either the name or ARN when specifying a DB cluster snapshot, or the ARN when specifying a DB snapshot"
   type        = string

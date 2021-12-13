@@ -75,6 +75,12 @@ module "aurora_postgres" {
   db_parameter_group_description = "For ${var.environment}."
   db_parameter_list = []
 
+  // aurora cluster
+  aurora_cluster_name = "${var.environment}-${var.service_name}-postgres"
+  engine_version = "13.4"
+  rds_security_group_ids = [
+    data.terraform_remote_state.security_group.outputs.rds_security_group_id
+  ]
   tags = {
     Environment = var.environment
   }
