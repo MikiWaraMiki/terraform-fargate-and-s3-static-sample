@@ -13,7 +13,7 @@
   "launchType": "FARGATE",
   "loadBalancers": [
     {
-      "containerName": "{{ must_env `TF_VAR_ECS_SERVICE_NAME` }}",
+      "containerName": "nestjs-nginx",
       "containerPort": 80,
       "targetGroupArn": "{{ tfstate `data.terraform_remote_state.load_balancer.outputs.target_group_arns[0]` }}"
     }
