@@ -17,3 +17,13 @@ data "terraform_remote_state" "security_group" {
     region = local.backend_config.region
   }
 }
+
+data "terraform_remote_state" "load_balancer" {
+  backend = "s3"
+
+  config = {
+    bucket = local.backend_config.bucket
+    key = "${local.backend_config.prefix}/load_balancer"
+    region = local.backend_config.region
+  }
+}

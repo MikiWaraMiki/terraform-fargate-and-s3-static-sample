@@ -1,0 +1,38 @@
+{
+  "deploymentConfiguration": {
+    "deploymentCircuitBreaker": {
+      "enable": false,
+      "rollback": false
+    },
+    "maximumPercent": 200,
+    "minimumHealthyPercent": 100
+  },
+  "desiredCount": 1,
+  "enableECSManagedTags": false,
+  "healthCheckGracePeriodSeconds": 0,
+  "launchType": "FARGATE",
+  "loadBalancers": [
+    {
+      "containerName": "{{ must_env `TF_VAR_ECS_SERVICE_NAME` }}",
+      "containerPort": 80,
+      "targetGroupArn": "{{ tfstate `data.terraform_remote_state.load_balancer.outputs.target_group_arns[0]` }}"
+    }
+  ],
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "assignPublicIp": "ENABLED",
+      "securityGroups": [
+        "{{ tfstate `data.terraform_remote_state.security_group.outputs.ecs_web_security_group_id` }}"
+      ],
+      "subnets": [
+        "{{ tfstate `data.terraform_remote_state.network.outputs.ecs_web_subnet_ids[0]` }}",
+        "{{ tfstate `data.terraform_remote_state.network.outputs.ecs_web_subnet_ids[1]` }}"
+      ]
+    }
+  },
+  "placementConstraints": [],
+  "placementStrategy": [],
+  "platformVersion": "LATEST",
+  "schedulingStrategy": "REPLICA",
+  "serviceRegistries": []
+}
