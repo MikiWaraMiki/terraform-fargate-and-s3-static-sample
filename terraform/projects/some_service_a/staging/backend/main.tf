@@ -93,3 +93,16 @@ module "nestjs_task_role" {
     ServiceName = var.service_name
   }
 }
+
+// Log Gruop
+module "nestjs_log_group" {
+  source = "terraform-aws-modules/cloudwatch/aws//modules/log-group"
+
+  name = "ecs/${var.service_name}/${var.environment}/backend"
+  retention_in_days = 7
+
+  tags = {
+    Environment = var.environment
+    ServiceName = var.service_name
+  }
+}
