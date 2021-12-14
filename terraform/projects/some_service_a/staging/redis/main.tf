@@ -10,7 +10,7 @@ terraform {
 }
 
 module "elasticache_redis" {
-  source = "../../../../common_modules/multi_az_elasticache_redis/"
+  source = "../../../../common_modules/elasticache_redis/"
 
   // subnet group
   subnet_group_name = "${var.environment}-${var.service_name}-redis"
@@ -27,15 +27,15 @@ module "elasticache_redis" {
   // replication group
   replication_group_id = "${var.environment}-${var.service_name}-redis"
   redis_maintenance_window = "mon:20:00-mon:21:00"
-  cluster_size = 1
   instance_type = "cache.t4g.small"
   engine_version = "6.x"
   security_group_ids = [
     data.terraform_remote_state.security_group.outputs.elasticache_redis_security_group_id
   ]
+  // NOTE: Single-AZ 1ノード
+  cluster_size = 1
   availability_zones = [
-    "ap-northeast-1a",
-    "ap-northeast-1c"
+    "ap-northeast-1a"
   ]
 
   environment = var.environment
