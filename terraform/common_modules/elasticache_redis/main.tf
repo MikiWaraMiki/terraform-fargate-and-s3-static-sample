@@ -53,7 +53,7 @@ module "replication_group" {
   instance_type = var.instance_type
   engine_version = var.engine_version
 
-  at_rest_encryption_enabled = false
+  at_rest_encryption_enabled = true
   transit_encryption_enabled = false
   automatic_failover_enabled = var.cluster_size > 1
   availability_zones = var.availability_zones
