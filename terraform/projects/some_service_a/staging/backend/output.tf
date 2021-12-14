@@ -37,3 +37,9 @@ output "nestjs_log_group_name" {
   description = "The name of nestjs cloudwatch log group"
   value = module.nestjs_log_group.cloudwatch_log_group_arn
 }
+
+// Firehose
+output "nestjs_log_firehose_arn" {
+  description = "The arn of nest firehose"
+  value = module.nestjs_log_firehose.arn
+}
