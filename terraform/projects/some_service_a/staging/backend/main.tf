@@ -32,6 +32,22 @@ module "ecs_backend" {
   service_name = var.service_name
 }
 
+module "ecs_batch" {
+  source = "../../../../common_modules/fargate_ecs_cluster"
+
+  cluster_name = "${var.environment}-${var.service_name}-batch"
+  default_capacity_provider_strategy = [
+    {
+      capacity_provider = "FARGATE"
+      weight = "1"
+      base = "0"
+    }
+  ]
+
+  environment = var.environment
+  service_name = var.service_name
+}
+
 // ECS BackendとBatchで共通利用するIAMを作成する
 // AccountID取得用
 data "aws_caller_identity" "self" {}

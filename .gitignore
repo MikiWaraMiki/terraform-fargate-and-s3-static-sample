@@ -35,3 +35,7 @@ override.tf.json
 terraform.rc
 
 **/*/config/backend-config.yaml
+
+## Docker
+docker/nestjs/sample-project
+docker/nginx
