@@ -1,0 +1,8 @@
+region: ap-northeast-1
+cluster: staging-some-service-a-batch
+task_definition: ecs-task-def.json
+timeout: 10m
+plugins:
+  - name: tfstate
+    config:
+      path: ../../terraform/projects/some_service_a/staging/backend/.terraform/terraform.tfstate

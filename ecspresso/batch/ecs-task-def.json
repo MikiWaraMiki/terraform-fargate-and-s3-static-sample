@@ -1,0 +1,28 @@
+{
+  "containerDefinitions": [
+    {
+      "name": "nestjs",
+      "cpu": 512,
+      "memoryReservation": 512,
+      "essential": true,
+      "image": "{{ tfstate `data.terraform_remote_state.ecr.outputs.nestjs_repository_url`}}:git-branch.master",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "{{ tfstate `module.nestjs_log_group.aws_cloudwatch_log_group.this[0].name` }}",
+          "awslogs-region": "ap-northeast-1",
+          "awslogs-stream-prefix": "batch"
+        }
+      }
+    }
+  ],
+  "cpu": "1024",
+  "executionRoleArn": "{{ tfstate `module.ecs_task_execution_role.module.ecs_task_execution_role.aws_iam_role.this[0].arn` }}",
+  "taskRoleArn": "{{ tfstate `module.nestjs_task_role.aws_iam_role.this[0].arn`}}",
+  "family": "{{ must_env `TF_VAR_PROJECT_NAME` }}_{{ must_env `TF_VAR_ECS_SERVICE_NAME` }}",
+  "memory": "2048",
+  "networkMode": "awsvpc",
+  "placementConstraints": [],
+  "requiresCompatibilities": ["FARGATE"],
+  "volumes": []
+}

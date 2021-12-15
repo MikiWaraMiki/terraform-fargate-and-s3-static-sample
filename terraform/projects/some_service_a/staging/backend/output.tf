@@ -1,13 +1,11 @@
-output "ecs_cluster_id" {
-  description = "ID of the ECS Cluster"
-  value       = module.ecs_backend.ecs_cluster_id
+output "ecs_backend" {
+  description = "Backend用ECS clusterの設定"
+  value = module.ecs_backend
 }
-
-output "ecs_cluster_arn" {
-  description = "ARN of the ECS Cluster"
-  value       = module.ecs_backend.ecs_cluster_arn
+output "ecs_batch" {
+  description = "Batch用ECS Clusterの設定"
+  value = module.ecs_batch
 }
-
 
 output "task_execution_role_name" {
   description = "The name of ecs task execution role"
@@ -42,4 +40,10 @@ output "nestjs_log_group_name" {
 output "nestjs_log_firehose_arn" {
   description = "The arn of nest firehose"
   value = module.nestjs_log_firehose.arn
+}
+
+// CloudwatchEvent Run Task
+output "cloudwatch_run_task_events_role" {
+  description = "Cloudwatch EventからECSタスクを起動できるようにするロール"
+  value = module.cloudwatch_run_task_events_role
 }

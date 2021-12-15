@@ -1,0 +1,20 @@
+region: ap-northeast-1
+cluster: {{ must_env "ECS_CLUSTER_NAME" }}
+role: staging-some-service-a-cloudwatch-run-task
+rules:
+- name: SampleTask
+  description: SampleTaskTest1
+  # UTC
+  scheduleExpression: cron(00 03 ? * * *)
+  taskDefinition: staging-some-service-a_nestjs-batch
+  platform_version: LATEST
+  launch_type: FARGATE
+  network_configuration:
+    aws_vpc_configuration:
+      subnets: {{ must_env "SUBNET_IDS" }}
+      security_groups:
+      - {{ must_env "SECURITY_GROUP_ID" }}
+      assign_public_ip: ENABLED
+  containerOverrides:
+  - name: nestjs
+    command: ["yarn", "-v"]

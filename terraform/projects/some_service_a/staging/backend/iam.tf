@@ -61,3 +61,32 @@ module "nestjs_task_role" {
     ServiceName = var.service_name
   }
 }
+/**
+ Batchタスクを起動するCloudwatchイベント用IAM
+**/
+data "aws_iam_policy" "ecs_events_role_policy" {
+  name = "AmazonEC2ContainerServiceEventsRole"
+}
+module "cloudwatch_run_task_events_role" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
+
+  create_role = true
+  role_name = "${var.environment}-${var.service_name}-cloudwatch-run-task"
+
+  trusted_role_services = [
+    "events.amazonaws.com"
+  ]
+
+  custom_role_policy_arns = [
+    data.aws_iam_policy.ecs_events_role_policy.arn
+  ]
+
+  role_requires_mfa = false
+
+  tags = {
+    Environment = var.environment
+    ServiceName = var.service_name
+  }
+
+
+}
