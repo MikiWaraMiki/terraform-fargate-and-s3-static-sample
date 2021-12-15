@@ -22,6 +22,10 @@ variable "https_listeners" {
   description = "The list of https listener"
   type = list(any)
 }
+variable "https_listener_rules" {
+  description = "The list of https listener rule"
+  type = list(any)
+}
 variable "is_enable_logging" {
   description = "When logging is disable, this value must be false"
   type = bool

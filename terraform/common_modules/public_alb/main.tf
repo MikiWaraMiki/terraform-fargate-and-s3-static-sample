@@ -1,3 +1,4 @@
+//https://github.com/terraform-aws-modules/terraform-aws-alb
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 6.0"
@@ -16,6 +17,7 @@ module "alb" {
   target_groups = var.target_group_attributes
 
   https_listeners = var.https_listeners
+  https_listener_rules = var.https_listener_rules
   http_tcp_listeners = [
     {
       port = 80

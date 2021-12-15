@@ -25,12 +25,12 @@ module "public_alb" {
     data.terraform_remote_state.security_group.outputs.elb_security_group_id
   ]
 
-  // TODO
-  //is_enable_logging = true
-  //logging_setting = {
-  //  bucket = "symfony-log-test"
-  //}
-  is_enable_logging = false
+  is_enable_logging = true
+  logging_setting = {
+    enabled = true
+    bucket = data.terraform_remote_state.logging.outputs.bucket_id
+    prefix = "${var.service_name}/${var.environment}/${var.environment}-public-alb"
+  }
 
   // See https://github.com/terraform-aws-modules/terraform-aws-alb#input_target_groups
   target_group_attributes = [
@@ -61,7 +61,31 @@ module "public_alb" {
       port = 443
       protocol = "HTTPS"
       certificate_arn = data.aws_acm_certificate.issued.arn
-      target_group_index = 0
+      action_type = "fixed-response"
+      fixed_response = {
+        content_type = "text/plain"
+        message_body = "page is not found"
+        status_code = 404
+      }
+    }
+  ]
+
+  https_listener_rules = [
+    {
+      https_listener_index = 0
+      priority = 1
+      actions = [{
+        type = "forward"
+        target_group_index = 0
+      }]
+      conditions = [{
+        http_headers = [{
+          http_header_name = "x-pre-shared-key"
+          values = [
+            local.backend_config.cloudfront_elb_pre_shared_key
+          ]
+        }]
+      }]
     }
   ]
 
