@@ -99,7 +99,8 @@ module "nestjs_task_role" {
   ]
 
   custom_role_policy_arns = [
-    module.nestjs_log_delivery_policy.arn
+    module.nestjs_log_delivery_policy.arn,
+    data.terraform_remote_state.iam.outputs.ecs_exec_policy.arn
   ]
 
   role_requires_mfa = false
@@ -145,7 +146,7 @@ module "nestjs_log_firehose" {
       key_type = "AWS_OWNED_CMK"
   }
 
-  iam_role_arn = data.terraform_remote_state.logging.outputs.firehose_iam_role_arn
+  iam_role_arn = data.terraform_remote_state.iam.outputs.firehose_log_delivery_role.iam_role_arn
   bucket_arn = data.terraform_remote_state.logging.outputs.bucket_arn
   prefix = "ecs/backend/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/"
   // NOTE: Kineis Firehose自体のエラーログ

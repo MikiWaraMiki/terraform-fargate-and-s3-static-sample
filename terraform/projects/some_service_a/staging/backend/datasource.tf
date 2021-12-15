@@ -47,5 +47,14 @@ data "terraform_remote_state" "ecr" {
     key = "${local.backend_config.prefix}/ecr"
     region = local.backend_config.region
   }
+}
 
+data "terraform_remote_state" "iam" {
+  backend = "s3"
+
+  config = {
+    bucket = local.backend_config.bucket
+    key = "${local.backend_config.prefix}/iam"
+    region = local.backend_config.region
+  }
 }
