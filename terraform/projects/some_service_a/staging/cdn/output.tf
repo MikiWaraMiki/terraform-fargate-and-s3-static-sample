@@ -1,3 +1,6 @@
+output "cloudfront_policy" {
+  value = module.cloudfront_policy
+}
 output "origin_request_policy_id" {
   description = "The value of origin request policy"
   value = module.cloudfront_policy.origin_request_policy_id
@@ -13,6 +16,9 @@ output "assets_cache_policy_id" {
   value = module.cloudfront_policy.min_ttl_s3_cache_policy_id
 }
 
+output "distribution" {
+  value = module.distribution
+}
 output "cloudfront_distribution_id" {
   description = "The identifier for the distribution."
   value       = module.distribution.cloudfront_distribution_id

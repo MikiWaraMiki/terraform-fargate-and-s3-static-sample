@@ -16,5 +16,4 @@ data "terraform_remote_state" "frontend" {
     key = "${local.backend_config.prefix}/frontend"
     region = local.backend_config.region
   }
-
 }
