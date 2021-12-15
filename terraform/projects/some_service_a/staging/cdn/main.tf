@@ -50,6 +50,12 @@ module "distribution" {
         origin_ssl_protocols = ["TLSv1.2"]
         origin_keepalive_timeout = 5 // 5sec
       }
+      custom_header = [
+        {
+          name = "x-pre-shared-key",
+          value = local.backend_config.cloudfront_elb_pre_shared_key
+        }
+      ]
     }
   }
 
@@ -72,5 +78,10 @@ module "distribution" {
   viewer_certificate = {
     acm_certificate_arn = data.aws_acm_certificate.issued.arn
     ssl_support_method = "sni-only"
+  }
+
+  tags = {
+    SeviceName = var.service_name
+    Environment = var.environment
   }
 }
