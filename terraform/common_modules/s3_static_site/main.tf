@@ -12,7 +12,7 @@ locals {
 // https://github.com/terraform-aws-modules/terraform-aws-s3-bucket
 module "bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
-
+  version = "2.11.1"
   bucket = var.bucket_name
   acl = "private"
 
