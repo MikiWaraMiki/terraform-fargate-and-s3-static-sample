@@ -1,0 +1,7 @@
+.next
+out
+node_modules
+build
+storybook-static
+.history
+package-lock.json

@@ -37,5 +37,8 @@ terraform.rc
 **/*/config/backend-config.yaml
 
 ## Docker
-docker/nestjs/sample-project/node_modules
-docker/nestjs/sample-project/dist
+apps/nestjs/sample-project/node_modules
+apps/nestjs/sample-project/dist
+apps/nextjs/sample/node_modules
+apps/nextjs/sample/dist
+apps/nextjs/sample/.next

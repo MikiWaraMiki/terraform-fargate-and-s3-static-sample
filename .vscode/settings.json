@@ -1,0 +1,21 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": [
+    "source.organizeImports",
+    "source.fixAll.eslint"
+  ],
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/.next/**": true,
+    "**/out/**": true,
+    "**/build:**": true
+  },
+  "eslint.workingDirectories": [
+    "./apps/nestjs/sample-project",
+    "./apps/nextjs/sample"
+  ]
+}
