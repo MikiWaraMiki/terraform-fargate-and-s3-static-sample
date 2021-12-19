@@ -48,6 +48,7 @@ module.exports = {
     },
   },
   rules: {
+    '@next/next/no-img-element': 'off',
     'react/react-in-jsx-scope': 'off',
     'sort-imports': 'off',
     'import/order': [

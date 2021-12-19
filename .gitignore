@@ -40,5 +40,5 @@ terraform.rc
 apps/nestjs/sample-project/node_modules
 apps/nestjs/sample-project/dist
 apps/nextjs/sample/node_modules
-apps/nextjs/sample/dist
+apps/nextjs/sample/out
 apps/nextjs/sample/.next
